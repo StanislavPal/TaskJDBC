@@ -18,7 +18,7 @@ import java.sql.Connection;
  */
 public class Main {
     public static void main(String[] args) {
-        Connection connection = Util.getConnection();
+        Connection dbConnection = Util.getConnection();
 
         UserService userService = new UserServiceImpl();
         userService.createUsersTable();
@@ -31,6 +31,6 @@ public class Main {
         }
         userService.dropUsersTable();
 
-        Util.closeConnection();
+        Util.closeConnection(dbConnection);
     }
 }

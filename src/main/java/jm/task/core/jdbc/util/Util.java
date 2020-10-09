@@ -1,21 +1,20 @@
 package jm.task.core.jdbc.util;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    private static Connection connection;
-
-    private static final String URL = "jdbc:mysql://localhost:3306/jm_3_lesson_1_1_3";
+    private static final String URL = "jdbc:mysql://localhost:3306/jm_3_lesson_1_1_3?useUnicode=true&serverTimezone=UTC&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "123456789";
 
     public static Connection getConnection() {
+        Connection connection = null;
+
         try {
-//            Class.forName("org.mysql.Driver");
-//            Driver driver = new FabricMySQLDriver();
+//            Class.forName("org.mysql.Driver"); //Что за херня?
+//            Driver driver = new FabricMySQLDriver(); //Почему не работало с последним драйвером?
 //            DriverManager.registerDriver(driver);
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             if ( !connection.isClosed() ) {
@@ -28,7 +27,7 @@ public class Util {
         return connection;
     }
 
-    public static void closeConnection() {
+    public static void closeConnection(Connection connection) {
         try {
             connection.close();
             if ( connection.isClosed() ) {
