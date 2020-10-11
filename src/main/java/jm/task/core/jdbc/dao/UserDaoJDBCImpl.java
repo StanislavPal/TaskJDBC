@@ -15,7 +15,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String sql = "CREATE TABLE `users` (\n" +
+        String sql = "CREATE TABLE IF NOT EXISTS `users` (\n" +
                 "  `id` BIGINT(19) NOT NULL AUTO_INCREMENT,\n" +
                 "  `name` VARCHAR(45) NOT NULL,\n" +
                 "  `lastname` VARCHAR(45) NULL,\n" +
@@ -28,7 +28,7 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        String sql = "DROP TABLE `users`;";
+        String sql = "DROP TABLE IF EXISTS `users`;";
         executeUpdate(sql);
     }
 
