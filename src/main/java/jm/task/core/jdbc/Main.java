@@ -1,5 +1,7 @@
 package jm.task.core.jdbc;
 
+import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
@@ -18,8 +20,6 @@ import java.sql.Connection;
  */
 public class Main {
     public static void main(String[] args) {
-        Connection dbConnection = Util.getConnection();
-
         UserService userService = new UserServiceImpl();
         userService.createUsersTable();
         userService.saveUser("Pol", "MacCartney", (byte) 23);
@@ -30,7 +30,5 @@ public class Main {
             System.out.println(user);
         }
         userService.dropUsersTable();
-
-        Util.closeConnection(dbConnection);
     }
 }
