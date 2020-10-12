@@ -52,6 +52,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
+//        https://examples.javacodegeeks.com/enterprise-java/hibernate/hibernate-crud-operations-tutorial
         try {
             // Getting Session Object From SessionFactory
             Session session = Util.getSessionFactory().openSession();
