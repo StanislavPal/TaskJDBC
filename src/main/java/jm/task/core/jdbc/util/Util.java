@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Util {
-    private static final String URL = "jdbc:mysql://localhost:3306/jm_3_m_1?useUnicode=true&serverTimezone=Europe/Moscow&useSSL=false";
+    private static final String URL = "jdbc:mysql://localhost:3306/task_jdbc?useUnicode=true&serverTimezone=Europe/Moscow&useSSL=false";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "987654321";
 
@@ -37,25 +37,27 @@ public class Util {
             try {
 //                Configuration configuration = new Configuration().configure();  //hibernate.cfg.xml
                 Configuration configuration = new Configuration()
-                        .setProperty("URL.connection.driver_class", "com.mysql.jdbc.Driver")
-                        .setProperty("URL.connection.url", "jdbc:mysql://localhost:3306/crud")
-                        .setProperty("URL.connection.username", "admin")
-                        .setProperty("URL.connection.password", "admin")
+//                        .setProperty("URL.connection.driver_class", "com.mysql.cj.jdbc.Driver")
+                        .setProperty("URL.connection.url", "jdbc:mysql://localhost:3306/task_jdbc")
+                        .setProperty("URL.connection.username", USERNAME)
+                        .setProperty("URL.connection.password", PASSWORD)
                         .setProperty("URL.connection.pool_size", "2")
                         .setProperty("URL.connection.autocommit", "false")
                         .setProperty("URL.cache.provider_class", "org.URL.cache.NoCacheProvider")
                         .setProperty("URL.cache.use_second_level_cache", "false")
                         .setProperty("URL.cache.use_query_cache", "false")
-                        .setProperty("URL.dialect", "org.URL.dialect.MySQL5Dialect")
+                        .setProperty("URL.dialect", "org.URL.dialect.MySQL8Dialect")
                         .setProperty("URL.show_sql", "true")
                         .setProperty("URL.current_session_context_class", "thread")
                         .addAnnotatedClass(User.class);
-                configuration.addAnnotatedClass(User.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
-
+                if (!sessionFactory.isClosed()) {
+                    System.out.println("SessionFactory: Connection OK!");
+                }
             } catch (Exception e) {
-                System.out.println("Исключение!" + e);
+                System.out.println("Error: SessionFactory create fail! " + e);
+                throw new RuntimeException(e);
             }
         }
         return sessionFactory;

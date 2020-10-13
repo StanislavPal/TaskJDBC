@@ -11,20 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+    private static Connection connection;
+
     public UserDaoJDBCImpl() {
+        connection = Util.getConnection();
     }
 
     public void createUsersTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS `users` (\n" +
-                "  `id` BIGINT(19) NOT NULL AUTO_INCREMENT,\n" +
-                "  `name` VARCHAR(45) NOT NULL,\n" +
-                "  `lastname` VARCHAR(45) NULL,\n" +
-                "  `age` INT(3) NULL,\n" +
-                "  PRIMARY KEY (`id`),\n" +
-                "  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)\n" +
-                "ENGINE = InnoDB\n" +
-                "DEFAULT CHARACTER SET = utf8;";
-        executeUpdate(sql);
+        executeUpdate(CREATE_TABLE_QUERY);
     }
 
     public void dropUsersTable() {
@@ -49,16 +43,17 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         List<User> users = null;
         String sql = "SELECT * FROM USERS;";
-        try(Connection connection = Util.getConnection();
-            Statement statement = connection.createStatement()) {
+        try(Statement statement = connection.createStatement()) {
             ResultSet rs =  statement.executeQuery(sql);
             users = new ArrayList<>();
             while (rs.next()) {
-                    users.add(new User(rs.getString("name"),
-                                       rs.getString("lastname"),
-                                       (byte) rs.getInt("age")));
+                users.add(new User(rs.getLong("id"),
+                        rs.getString("name"),
+                        rs.getString("lastname"),
+                        (byte) rs.getInt("age")));
             }
         } catch (SQLException throwables) {
+            closeConnection();
             System.out.println("Err: Query didn't execute");
             throwables.printStackTrace();
             return null;
@@ -72,13 +67,22 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     private int executeUpdate(String sql) {
-        try(Connection connection = Util.getConnection();
-            Statement statement = connection.createStatement()) {
+        try(Statement statement = connection.createStatement()) {
             return  statement.executeUpdate(sql) ;
          } catch (SQLException throwables) {
+            closeConnection();
             System.out.println("Err: Query didn't execute");
             throwables.printStackTrace();
             return  -1;
+        }
+    }
+
+    public void closeConnection () {
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            System.out.println("Err: Error during connection close");
+            throwables.printStackTrace();
         }
     }
 }

@@ -30,5 +30,7 @@ public class Main {
             System.out.println(user);
         }
         userService.dropUsersTable();
+
+        userService.closeConnection();
     }
 }
