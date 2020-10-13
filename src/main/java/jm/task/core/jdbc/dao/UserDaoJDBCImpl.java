@@ -80,6 +80,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void closeConnection () {
         try {
             connection.close();
+            System.out.println("Connection closed!");
         } catch (SQLException throwables) {
             System.out.println("Err: Error during connection close");
             throwables.printStackTrace();
