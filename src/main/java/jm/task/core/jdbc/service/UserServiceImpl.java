@@ -10,12 +10,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
 
-//    public UserServiceImpl() { userDao = new UserDaoHibernateImpl(); }
-    public UserServiceImpl() { userDao = new UserDaoJDBCImpl(); }
+    public UserServiceImpl() { userDao = new UserDaoHibernateImpl(); }
+//    public UserServiceImpl() { userDao = new UserDaoJDBCImpl(); }
 
-    public void createUsersTable() {
-        userDao.createUsersTable();
-    }
+    public void createUsersTable() { userDao.createUsersTable(); }
 
     public void dropUsersTable() {
         userDao.dropUsersTable();
@@ -37,9 +35,7 @@ public class UserServiceImpl implements UserService {
         userDao.cleanUsersTable();
     }
 
-    public void closeConnection() {
-        userDao.closeConnection();
-    }
+    public void closeConnection() { userDao.closeConnection(); }
 
 
 }

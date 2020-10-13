@@ -37,18 +37,28 @@ public class Util {
             try {
 //                Configuration configuration = new Configuration().configure();  //hibernate.cfg.xml
                 Configuration configuration = new Configuration()
-//                        .setProperty("URL.connection.driver_class", "com.mysql.cj.jdbc.Driver")
-                        .setProperty("URL.connection.url", "jdbc:mysql://localhost:3306/task_jdbc")
-                        .setProperty("URL.connection.username", USERNAME)
-                        .setProperty("URL.connection.password", PASSWORD)
-                        .setProperty("URL.connection.pool_size", "2")
-                        .setProperty("URL.connection.autocommit", "false")
-                        .setProperty("URL.cache.provider_class", "org.URL.cache.NoCacheProvider")
-                        .setProperty("URL.cache.use_second_level_cache", "false")
-                        .setProperty("URL.cache.use_query_cache", "false")
-                        .setProperty("URL.dialect", "org.URL.dialect.MySQL8Dialect")
-                        .setProperty("URL.show_sql", "true")
-                        .setProperty("URL.current_session_context_class", "thread")
+                        .setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver")
+                        .setProperty("hibernate.connection.url", URL)
+                        .setProperty("hibernate.connection.username", USERNAME)
+                        .setProperty("hibernate.connection.password", PASSWORD)
+
+//                        .setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver")
+//                        .setProperty("hibernate.connection.url", URL)
+//                        .setProperty("hibernate.connection.username", USERNAME)
+//                        .setProperty("hibernate.connection.password", PASSWORD)
+//                        .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect")
+//                        .setProperty("hibernate.show_sql", "true")
+//                        .setProperty("hibernate.current_session_context_class", "thread")
+//                        .addAnnotatedClass(User.class);
+
+//                        .setProperty("hibernate.connection.pool_size", "2")
+                        .setProperty("hibernate.connection.autocommit", "false")
+//                        .setProperty("hibernate.cache.provider_class", "org.URL.cache.NoCacheProvider")
+                        .setProperty("hibernate.cache.use_second_level_cache", "false")
+                        .setProperty("hibernate.cache.use_query_cache", "false")
+                        .setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect")
+                        .setProperty("hibernate.show_sql", "true")
+                        .setProperty("hibernate.current_session_context_class", "thread")
                         .addAnnotatedClass(User.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
@@ -57,7 +67,6 @@ public class Util {
                 }
             } catch (Exception e) {
                 System.out.println("Error: SessionFactory create fail! " + e);
-                throw new RuntimeException(e);
             }
         }
         return sessionFactory;
