@@ -10,10 +10,7 @@ public interface UserDao {
             "  `name` VARCHAR(45) NOT NULL,\n" +
             "  `lastname` VARCHAR(45) NULL,\n" +
             "  `age` INT(3) NULL,\n" +
-            "  PRIMARY KEY (`id`),\n" +
-            "  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)\n" +
-            "ENGINE = InnoDB\n" +
-            "DEFAULT CHARACTER SET = utf8;";
+            "  PRIMARY KEY (`id`));";
 
     
     void createUsersTable();

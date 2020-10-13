@@ -4,6 +4,7 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -76,7 +77,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try {
             session.beginTransaction();
 
-            NativeQuery queryObj = session.createQuery("DELETE FROM User");
+            Query queryObj = session.createQuery("DELETE FROM User");
             queryObj.executeUpdate();
 
             session.getTransaction().commit();
