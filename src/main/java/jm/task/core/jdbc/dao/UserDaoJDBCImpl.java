@@ -22,22 +22,19 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void dropUsersTable() {
-        String sql = "DROP TABLE IF EXISTS `users`;";
-        executeUpdate(sql);
+        executeUpdate("DROP TABLE IF EXISTS `users`;");
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        String sql = "INSERT INTO USERS (name, lastname, age) VALUES"
+        executeUpdate("INSERT INTO USERS (name, lastname, age) VALUES"
                 + " ('" + name
                 + "', '" + lastName
-                + "', '" + age + "');";
-        executeUpdate(sql);
+                + "', '" + age + "');");
     }
 
     public void removeUserById(long id) {
-        String sql = "DELETE FROM USERS WHERE"
-                + " id = " + id + ";";
-        executeUpdate(sql);
+        executeUpdate("DELETE FROM USERS WHERE"
+                + " id = " + id + ";");
     }
 
     public List<User> getAllUsers() {
@@ -53,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
                         (byte) rs.getInt("age")));
             }
         } catch (SQLException throwables) {
-            closeConnection();
+            close();
             System.out.println("Err: Query didn't execute");
             throwables.printStackTrace();
             return null;
@@ -70,14 +67,14 @@ public class UserDaoJDBCImpl implements UserDao {
         try(Statement statement = connection.createStatement()) {
             return  statement.executeUpdate(sql) ;
          } catch (SQLException throwables) {
-            closeConnection();
+            close();
             System.out.println("Err: Query didn't execute");
             throwables.printStackTrace();
             return  -1;
         }
     }
 
-    public void closeConnection () {
+    public void close () {
         try {
             connection.close();
             System.out.println("Connection closed!");

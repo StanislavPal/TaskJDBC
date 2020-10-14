@@ -31,6 +31,6 @@ public class Main {
         }
         userService.dropUsersTable();
 
-        userService.closeConnection();
+        userService.close();
     }
 }

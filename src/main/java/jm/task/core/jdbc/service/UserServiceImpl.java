@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
         userDao.cleanUsersTable();
     }
 
-    public void closeConnection() { userDao.closeConnection(); }
+    public void close() { userDao.close(); }
 
 
 }

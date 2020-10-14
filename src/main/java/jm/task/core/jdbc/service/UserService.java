@@ -17,5 +17,5 @@ public interface UserService {
 
     void cleanUsersTable();
 
-    void closeConnection();
+    void close();
 }
